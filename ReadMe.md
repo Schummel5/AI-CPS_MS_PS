@@ -29,3 +29,12 @@ Docker:
 10. Choose a branch: git branch -m main
 11. Added the Origin to the docker container: git remote add origin https://github.com/Schummel5/AI-CPS_MS_PS
 
+Packages for Docker:
+
+1. Installed the package called nano: apt-get install nano
+2. Installed the package python3: apt-get install python3
+3. Installed the package called python3-numpy: apt-get install python3-numpy
+4. Installed the package called python3-statsmodels: apt-get install python3-statsmodels
+5. Installed the package called python3-matplotlib: apt-get install python3-matplotlib
+6. Installed the package called python3-requests: apt-get install python3-requests
+
