@@ -2,7 +2,7 @@ README-File
 
 Authors: MS and PS
 
-This repository is part of the course: "M. Grum: Advanced AI-based ApplicaGon Systems"
+This repository is part of the course: "M. Grum: Advanced AI-based Application Systems"
 
 Status: InProgress
 
@@ -39,4 +39,4 @@ Packages for Docker:
 6. Installed the package called python3-requests: apt-get install python3-requests
 7. Installed the package called python3-scipy: apt-get install python3-scipy
 8. Installed the package called python3-sklearn: apt-get install python3-sklearn
-(9. Installed the package called python3-selenium: apt-get install python3-selenium
+9. Installed the package called python3-selenium: apt-get install python3-selenium
