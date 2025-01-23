@@ -103,6 +103,7 @@ df.to_csv("normalized_filtered_cleaned_data.csv", index=False)
 
 ## Step 3: Split the data in training- and testingdata
 train_data, test_data = train_test_split(df, test_size=0.2, random_state=42)
+
 train_data.to_csv('Data_training.csv', index=False)
 test_data.to_csv('Data_testing.csv', index=False)
 
