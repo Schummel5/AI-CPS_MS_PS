@@ -39,4 +39,3 @@ Packages for Docker:
 6. Installed the package called python3-requests: apt-get install python3-requests
 7. Installed the package called python3-scipy: apt-get install python3-scipy
 8. Installed the package called python3-sklearn: apt-get install python3-sklearn
-9. Installed the package called python3-selenium: apt-get install python3-selenium
