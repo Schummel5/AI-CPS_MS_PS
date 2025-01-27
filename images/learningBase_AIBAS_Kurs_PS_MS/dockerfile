@@ -1,0 +1,5 @@
+FROM busybox:latest
+
+WORKDIR /tmp/AIBAS_KURS_PS_MS/images/learningBase_AIBAS_Kurs_PS_MS
+
+

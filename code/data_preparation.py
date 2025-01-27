@@ -13,7 +13,7 @@ from sklearn.linear_model import LinearRegression
 
 
 ## Step 2: Data Cleaning
-
+path_cleaned = '/tmp/AIBAS_KURS_PS_MS/data/cleaned_data.csv'
 
 df.iloc[:, -2] = df.iloc[:, -2].replace({'\$': '', ',': ''}, regex=True).astype(float) 
 df.iloc[:, -1] = df.iloc[:, -1].replace({'\$': '', ',': ''}, regex=True).astype(float)  
@@ -21,7 +21,7 @@ df_cleaned = df.iloc[:, 2:]
 df = df.apply(pd.to_numeric, errors='coerce')
 df = df.dropna(axis=1, how='any')
 #print(df_cleaned.head())
-df_cleaned.to_csv("cleaned_data.csv", index=False)
+df_cleaned.to_csv(folder_cleaned, index=False)
 
 # Quantile Filter
 lower_quantile = 0.10
@@ -59,11 +59,15 @@ scaler = MinMaxScaler()
 df[numerical_columns] = scaler.fit_transform(df[numerical_columns])
 #print(df)
 
+path_normalized_filtered_cleaned_data = '/tmp/AIBAS_KURS_PS_MS/data/normalized_filtered_cleaned_data.csv'
 
-df.to_csv("normalized_filtered_cleaned_data.csv", index=False)
+df.to_csv(path_normalized_filtered_cleaned_data, index=False)
 
 ## Step 3: Split the data in training- and testingdata
 train_data, test_data = train_test_split(df, test_size=0.2, random_state=42)
 
-train_data.to_csv('Data_training.csv', index=False)
-test_data.to_csv('Data_testing.csv', index=False)
+path_train = '/tmp/AIBAS_KURS_PS_MS/data/training_data.csv'
+path_test= '/tmp/AIBAS_KURS_PS_MS/data/testing_data.csv'
+
+train_data.to_csv(path_train, index=False)
+test_data.to_csv(path_test, index=False)
