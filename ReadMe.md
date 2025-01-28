@@ -39,3 +39,5 @@ Packages for Docker:
 6. Installed the package called python3-requests: apt-get install python3-requests
 7. Installed the package called python3-scipy: apt-get install python3-scipy
 8. Installed the package called python3-sklearn: apt-get install python3-sklearn
+9. Installed the package called docker-compose: apt-get install docker-compose
+10. Installed the package called python3-setuptools: apt-get install python3-setuptools
