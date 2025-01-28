@@ -5,7 +5,6 @@ services:
     image: activationBase_AIBAS_KURS_PS_MS
     volumes:
        - ai_system:/tmp
-    command:
 volumes:
   ai_system:
     external: true
