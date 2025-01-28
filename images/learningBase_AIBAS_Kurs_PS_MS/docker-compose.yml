@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  learning_base:
+    build: .
+    image: learningBase_AIBAS_KURS_PS_MS
+    volumes:
+        - ai_system:/tmp
+volumes:
+  ai_system:
+    external: true
