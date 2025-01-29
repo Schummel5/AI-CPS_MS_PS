@@ -1,11 +1,16 @@
+# Dockerfile learningBase
 FROM busybox:latest
 
+# Create directories
 RUN mkdir -p /tmp/learningBase
 RUN mkdir -p /tmp/learningBase/train
 RUN mkdir -p /tmp/learningBase/validation
 
+# Add the training and testing Data in the following paths
 COPY /tmp/AIBAS_KURS_PS_MS/data/training_data.csv /tmp/learningBase/train/
 COPY /tmp/AIBAS_KURS_PS_MS/data/testing_data.csv /tmp/learningBase/validation/
+
+# Add README File
 COPY README.learningBase.md /tmp/learningBase/
 
 
