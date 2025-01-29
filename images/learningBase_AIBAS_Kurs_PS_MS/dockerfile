@@ -1,8 +1,11 @@
 FROM busybox:latest
 
+RUN mkdir -p /tmp/learningBase
 RUN mkdir -p /tmp/learningBase/train
 RUN mkdir -p /tmp/learningBase/validation
 
 COPY /tmp/AIBAS_KURS_PS_MS/data/training_data.csv /tmp/learningBase/train/
 COPY /tmp/AIBAS_KURS_PS_MS/data/testing_data.csv /tmp/learningBase/validation/
 COPY README.learningBase.md /tmp/learningBase/
+
+
