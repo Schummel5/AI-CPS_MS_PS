@@ -1,120 +1,127 @@
 import matplotlib.pyplot as plt
+import os
 import pandas as pd
-import statsmodels.api as sm
 import numpy as np
+import sys 
+sys.path.append('/tmp/AIBAS_KURS_PS_MS/pybrain')
+from pybrain.datasets import SupervisedDataSet
+from pybrain.structure import FeedForwardNetwork
+from pybrain.structure import LinearLayer, SigmoidLayer, TanhLayer
+from pybrain.structure.connections import FullConnection
+from pybrain.supervised.trainers import BackpropTrainer
+from pybrain.tools.customxml import NetworkWriter, NetworkReader
+from sklearn.preprocessing import StandardScaler
+
+
+
+import statsmodels.api as sm
+
 import csv
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.linear_model import LinearRegression
-import sys 
-sys.path.append('/tmp/learn/pybrain')
 
-from pybrain.structure import FeedForwardNetwork
-from pybrain.structure import LinearLayer, SigmoidLayer, TanhLayer
 from pybrain.structure import FullConnection
-from pybrain.datasets import SupervisedDataSet
-from pybrain.tools.shortcuts import buildNetwork
-from pybrain.supervised.trainers import BackpropTrainer
 
-from pybrain.tools.customxml import NetworkWriter, NetworkReader
+from pybrain.tools.shortcuts import buildNetwork
+
 import pylab
 
+
+output_dir = "/tmp/AIBAS_KURS_PS_MS/data/"
+os.makedirs(output_dir, exist_ok=True)
+
 # Reading the CSV files of the training and testing data
-train_df = pd.read_csv('/tmp/AIBAS_KURS_PS_MS/data/training_data')
-test_df = pd.read_csv('/tmp/AIBAS_KURS_PS_MS/data/testing_data')
+train_df = pd.read_csv('/tmp/AIBAS_KURS_PS_MS/data/training_data.csv')
+test_df = pd.read_csv('/tmp/AIBAS_KURS_PS_MS/data/testing_data.csv')
+
+# Collecting the x and y of each dataset
+x_train, y_train = train_df.iloc[:, :-1].values, train_df.iloc[:, -1].values
+x_test, y_test = test_df.iloc[:, :-1].values, test_df.iloc[:, -1].values
 
 
+# Creating the ANN network
 n = buildNetwork(1, 10, 10, 1, hiddenclass=SigmoidLayer, bias=True)
 
-# PyBrain-Datasets für Training und Testing
-train_dataset = SupervisedDataSet(1, 1)
-test_dataset = SupervisedDataSet(1, 1)
+# Creating the PyBrain-Datasets for training und testing
+train_dataset = SupervisedDataSet(x_train.shape[1], 1)
+test_dataset = SupervisedDataSet(x_test.shape[1], 1)
 
-for xi, yi in zip(x_train, y_train):
-    train_dataset.addSample(xi, yi)
+for i in range(len(x_train)):
+    train_dataset.addSample(x_train[i], y_train[i])
 
-for xi, yi in zip(x_test, y_test):
-    test_dataset.addSample(xi, yi)
+for i in range(len(x_test)):
+    test_dataset.addSample(x_test[i], y_test[i])
 
 print(train_dataset)
 print(test_dataset)
 
 
 # Create ANN Model
-train = BackpropTrainer(n,train_dataset)
+train = BackpropTrainer(n,train_dataset, learningrate=0.01, momentum=0.9)
 
 
 # Train the model
 print("Training the model...")
 
-train.trainEpochs(epochs=10)
-
-scaler_x = MinMaxScaler(feature_range=(0, 1))
-scaler_y = MinMaxScaler(feature_range=(0, 1))
-
-train_data_x = x_train.reshape(-1, 1)
-train_data_y = y_train.reshape(-1, 1)
+epochs = 50
+train_errors = []
+test_errors = []
 
 
-train_data_x_scaled = scaler_x.fit_transform(train_data_x)
-train_data_y_scaled = scaler_y.fit_transform(train_data_y)
+for epoch in range(epochs):
+    train_error = train.train()
+    train_error = np.mean(train_error) 
+    train_errors.append(train_error)
+    test_error = train.testOnData(test_dataset)
+    test_errors.append(test_error)
+    
+print(f"Train error type: {type(train_error)}")
+print(f"Train error value: {train_error}")
 
-
-train_data_xx = train_data_x_scaled.ravel()
-train_data_yy = train_data_y_scaled.ravel()
-
-
-predictions_scaled = [n.activate([x])[0] for x in train_data_xx]
-predictions = scaler_y.inverse_transform(np.array(predictions_scaled).reshape(-1, 1))
+print(f"Epoch {epoch+1}/{epochs}: Training Error = {train_error:.4f}, Test Error = {test_error:.4f}")
 
 print("Training completed.")
 
 # Save the model
-model_file = "currentAiSoluGon.xml"
-NetworkWriter.writeToFile(n, model_file)
-print(f"Model saved to {model_file}.")
+NetworkWriter.writeToFile(n, os.path.join(output_dir, "currentAiSolution.xml"))
+print(f"Model saved to XML file.")
+#print(f"Train Errors: {train_errors[:5]}")
+#print(f"Test Errors: {test_errors[:5]}")
 
 
-# Load the model
-print("Loading the model...")
-loaded_network = NetworkReader.readFrom(model_file)
-print("Model loaded successfully.")
+# Create the trainings curve
+plt.figure()
+plt.plot(train_errors, label='Training Error', color='blue')
+plt.plot(test_errors, label='Test Error', color='red')
+plt.xlabel('Epochs')
+plt.ylabel('Error')
+plt.legend()
+plt.title('Training & Test Error Curve')
+plt.savefig(os.path.join(output_dir, "training_curve.png"))
+print('Training Curve')
+
+# Create the error Plot
+predictions = np.array([n.activate(x)[0] for x in x_test])
+errors = y_test - predictions
+plt.figure()
+plt.hist(errors, bins=25, alpha=0.7, color='blue')
+plt.xlabel('Prediction Error')
+plt.ylabel('Count')
+plt.title('Error Distribution')
+plt.savefig(os.path.join(output_dir, "error_distribution.png"))
+print('ErrorPlot')
 
 # Scatter Plot
-# Create the plot
-plt.figure(figsize=(10, 6))
+plt.figure()
+plt.scatter(x_train, y_train, color='orange', label='Training Data', alpha=0.7)
+plt.scatter(x_test, y_test, color='blue', label='Testing Data', alpha=0.3)
+plt.scatter(y_test, predictions, color='red', label='Predictions', alpha=0.5)
+plt.xlabel('True Values')
+plt.ylabel('Predictions')
+plt.title('Scatter Plot: True vs. Predicted')
+plt.savefig(os.path.join(output_dir, "scatter_plot.png"))
+print('ScatterPlot')
 
-# Scatter plots
-plt.scatter(train_data['x'], train_data['y'], color='orange', label='Training Data', alpha=0.7)
-plt.scatter(test_data['x'], test_data['y'], color='blue', label='Testing Data', alpha=0.3)
-
-
-train_predictions = [n.activate([xi])[0] for xi in train_data['x'].values]
-
-sorted_indices = np.argsort(train_data['x'].values)  # Indizes sortieren
-sorted_x = train_data['x'].values[sorted_indices]   # Sortierte x-Werte
-sorted_predictions = np.array(train_predictions)[sorted_indices]
-
-plt.plot(sorted_x, predictions, color='red', label='Prediction Line (Trained Model)', linewidth=2)
-
-# Add labels, title, legend
-plt.xlabel('Influence Variable')
-plt.ylabel('Target Variable')
-plt.title('Scatter Plot with Training, Testing Data and Regression Line')
-plt.legend()
-plt.grid(alpha=0.3)
-
-# Save the figure to a PDF
-output_file = 'UE_06_ScatterVisualizationAndOlsModel.pdf'
-plt.savefig(output_file, format='pdf')
-
-# Show the plot
-plt.show()
-
-print(f"Figure saved as {output_file}.")
-
-pylab.plot(sorted_x, train_predictions, color='blue', label='Prediction Line (Trained)', linewidth=2)
-pylab.plot(train_data['x'], train_data['y'], color='red', label='Prediction Line (Trained)', linewidth=2)
-
-pylab.grid()
-pylab.legend()
-pylab.show()
+with open(os.path.join(output_dir, "training_report.txt"), 'w') as f:
+    f.write(f"Final Training Error: {train_errors[-1]:.4f}\n")
+    f.write(f"Final Test Error: {test_errors[-1]:.4f}\n")
