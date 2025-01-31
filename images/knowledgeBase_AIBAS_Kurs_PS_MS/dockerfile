@@ -1,0 +1,7 @@
+FROM busybox
+
+# Create directories
+RUN mkdir -p /tmp/knowledgeBase
+
+# Add README File
+ADD ./README.md knowledgeBase/README.md

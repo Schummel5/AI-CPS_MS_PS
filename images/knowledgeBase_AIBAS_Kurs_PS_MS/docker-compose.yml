@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  knowledge_base:
+    build: .
+    image: knowledgebase_aibas_kurs_ps_ms:latest
+    volumes:
+       - ai_system:/tmp
+volumes:
+  ai_system:
+    external: true
