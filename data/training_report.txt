@@ -1,2 +1,7 @@
+<<<<<<< HEAD
 Final Training Error: 0.0069
 Final Test Error: 0.0022
+=======
+Final Training Error: 0.0077
+Final Test Error: 0.0061
+>>>>>>> refs/remotes/origin/main
