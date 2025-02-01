@@ -12,5 +12,3 @@ COPY /tmp/AIBAS_KURS_PS_MS/data/testing_data.csv /tmp/learningBase/validation/
 
 # Add README File
 COPY README.learningBase.md /tmp/learningBase/
-
-
