@@ -4,32 +4,52 @@ import pandas as pd
 import statsmodels.api as sm
 import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sns
+import pickle
+import os
 import csv
 
-# Load the CSV file
-
-path = '/tmp/AIBAS_KURS_PS_MS/data/.csv'
-data = pd.read_csv(path)
+output_dir = "/tmp/AIBAS_KURS_PS_MS/data/OLS_model/"
+os.makedirs(output_dir, exist_ok=True)
 
 # Reading the CSV files of the training and testing data
 train_df = pd.read_csv('/tmp/AIBAS_KURS_PS_MS/data/training_data.csv')
 test_df = pd.read_csv('/tmp/AIBAS_KURS_PS_MS/data/testing_data.csv')
 
-print(data.head())
+print(train_df.head())
 
 # 6. OLS Model influence 'Estimated EPS', target 'Actual EPS'
-# response variable endog = y
-y = data['Actual EPS']
-# explanatory variable exog = x
-x = data['Estimated EPS']
+x_train = train_df['Actual EPS']
+y_train = train_df['Estimated EPS']
+x_test = test_df['Actual EPS']
+y_test = test_df['Estimated EPS']
 
 # add constant to predictor variables
-x = sm.add_constant(x)
+x_train = sm.add_constant(x_train)
+x_test = sm.add_constant(x_test)
 
 # fit linear regression model
-model = sm.OLS(y,x).fit()
+model = sm.OLS(y_train,x_train).fit()
+
+#
+#plt.scatter(x_test, y_test, color='blue', label='Testing Data', alpha=0.3)
+plt.scatter(y_test, model.predict(x_test), alpha=0.5)
+plt.xlabel("Actual Grades")  # Updated label
+plt.ylabel("Predicted Grades")  # Updated label
+plt.title("OLS Model: Actual vs. Predicted Grades")  # Updated title
+plt.savefig(os.path.join(output_dir, "scatterplot_ols.png"))
+plt.show()
+
+residuals = y_test - model.predict(x_test)
+sns.histplot(residuals, bins=30, kde=True)
+plt.xlabel("Residuals")  # Updated label
+plt.ylabel("Count")  # Updated label
+plt.title("Histogram of Residuals (Prediction Errors)")  # Updated title
+plt.savefig(os.path.join(output_dir, "residualplot_ols.png"))
+plt.show()
 
 #view model summary
 ols_model_file_path = '/tmp/AIBAS_KURS_PS_MS/data/OLS_model/currentOlsSolution.xml'
 with open(ols_model_file_path, 'w') as file:
 	file.write(model.summary().as_text())
+
