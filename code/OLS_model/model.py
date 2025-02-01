@@ -4,11 +4,16 @@ import pandas as pd
 import statsmodels.api as sm
 import numpy as np
 import matplotlib.pyplot as plt
+import csv
 
 # Load the CSV file
 
 path = '/tmp/AIBAS_KURS_PS_MS/data/.csv'
 data = pd.read_csv(path)
+
+# Reading the CSV files of the training and testing data
+train_df = pd.read_csv('/tmp/AIBAS_KURS_PS_MS/data/training_data.csv')
+test_df = pd.read_csv('/tmp/AIBAS_KURS_PS_MS/data/testing_data.csv')
 
 print(data.head())
 
