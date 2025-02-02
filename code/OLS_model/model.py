@@ -14,7 +14,7 @@ os.makedirs(output_dir, exist_ok=True)
 
 # Reading the CSV files of the training and testing data
 train_df = pd.read_csv('/tmp/AIBAS_KURS_PS_MS/data/training_data.csv')
-test_df = pd.read_csv('/tmp/AIBAS_KURS_PS_MS/data/testing_data.csv')
+test_df = pd.read_csv('/tmp/AIBAS_KURS_PS_MS/data/test_data.csv')
 
 
 print(train_df.head())
@@ -32,16 +32,17 @@ X_test = sm.add_constant(x_test)
 # fit linear regression model
 model = sm.OLS(y_train,X_train).fit()
 
+# checking the data format
 '''print(len(x_train.index))
-print(len(y_train.index))'''
+print(len(y_train.index))
 print(f"x_test shape: {x_test.shape}, y_test shape: {y_test.shape}")
 print(f"Predictions shape: {model.predict(X_test).shape}")
 
 print(f"X_train shape: {X_train.shape}, y_train shape: {y_train.shape}")
-print(f"X_test shape: {X_test.shape}, y_test shape: {y_test.shape}")
+print(f"X_test shape: {X_test.shape}, y_test shape: {y_test.shape}")'''
 
 
-#
+# Scatter Plot
 plt.figure(figsize=(10, 6))
 plt.scatter(x_train, y_train, color='orange', label='Training Data')
 plt.scatter(x_test, y_test, color='blue', label='Testing Data', alpha=0.3)
@@ -59,6 +60,12 @@ plt.ylabel("Count")  # Updated label
 plt.title("Histogram of Residuals (Prediction Errors)")  # Updated title
 plt.savefig(os.path.join(output_dir, "residualplot_ols.png"))
 plt.show()
+
+# Step 9: Diagnostic Plots (Assuming UE_04_LinearRegDiagnostic.py is present)
+from UE_04_LinearRegDiagnostic import LinearRegDiagnostic
+diagnostic = LinearRegDiagnostic(model)
+vif, fig, ax = diagnostic()
+fig.savefig(os.path.join(output_dir, "diagnosticplot_ols.png"))
 
 #view model summary
 ols_model_file_path = '/tmp/AIBAS_KURS_PS_MS/data/OLS_model/currentOlsSolution.xml'
