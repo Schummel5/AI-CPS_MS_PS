@@ -1,3 +1,7 @@
+# This file is for the data preparation. 
+# Subgoal 2: Data Scraping and Data Preparation
+# For example bringing the data in the right format, cleaning outliers and scaling.
+
 import pylab
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -14,7 +18,7 @@ from sklearn.linear_model import LinearRegression
 
 ## Step 2: Data Cleaning
 path_cleaned = '/tmp/AIBAS_KURS_PS_MS/data/cleaned_data.csv'
-
+# change the data to numeric
 df.iloc[:, -2] = df.iloc[:, -2].replace({'\$': '', ',': ''}, regex=True).astype(float) 
 df.iloc[:, -1] = df.iloc[:, -1].replace({'\$': '', ',': ''}, regex=True).astype(float)  
 df_cleaned = df.iloc[:, 2:]
@@ -59,7 +63,7 @@ scaler = MinMaxScaler()
 df[numerical_columns] = scaler.fit_transform(df[numerical_columns])
 #print(df)
 
-path_normalized_filtered_cleaned_data = '/tmp/AIBAS_KURS_PS_MS/data/normalized_filtered_cleaned_data.csv'
+path_normalized_filtered_cleaned_data = '/tmp/AIBAS_KURS_PS_MS/data/joint_data_collection.csv'
 
 df.to_csv(path_normalized_filtered_cleaned_data, index=False)
 
@@ -71,3 +75,13 @@ path_test= '/tmp/AIBAS_KURS_PS_MS/data/testing_data.csv'
 
 train_data.to_csv(path_train, index=False)
 test_data.to_csv(path_test, index=False)
+
+## Step 4: Split the data in activation_data
+
+activation_data = df.iloc[:1]
+
+path_activation = '/tmp/AIBAS_KURS_PS_MS/data/activation_data.csv'
+
+activation_data.to_csv(path_activation, index=False)
+
+
