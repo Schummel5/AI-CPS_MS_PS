@@ -1,0 +1,9 @@
+FROM busybox
+
+RUN mkdir -p /tmp/codeBase
+
+
+COPY activation_data.csv /tmp/codeBase/
+COPY ReadMe.md /tmp/codeBase/
+
+CMD ["echo", "codeBase Image is ready!"]
