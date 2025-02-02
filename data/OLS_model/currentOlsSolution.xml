@@ -3,8 +3,8 @@
 Dep. Variable:          Estimated EPS   R-squared:                       0.890
 Model:                            OLS   Adj. R-squared:                  0.884
 Method:                 Least Squares   F-statistic:                     138.0
-Date:                Sat, 01 Feb 2025   Prob (F-statistic):           1.40e-09
-Time:                        17:58:59   Log-Likelihood:                 15.454
+Date:                Sun, 02 Feb 2025   Prob (F-statistic):           1.40e-09
+Time:                        15:17:18   Log-Likelihood:                 15.454
 No. Observations:                  19   AIC:                            -26.91
 Df Residuals:                      17   BIC:                            -25.02
 Df Model:                           1                                         
