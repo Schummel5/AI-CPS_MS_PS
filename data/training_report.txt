@@ -1,2 +1,0 @@
-Final Training Error: 0.0067
-Final Test Error: 0.0030
