@@ -1,0 +1,20 @@
+version: "3.0"
+services:
+    knowledgebase:
+        image: schummel/knowledgebase_aibas_kurs_ps_ms:latest
+        build: ./knowledgeBase
+        volumes:
+           - ai_system:/tmp
+    activationBase:
+        image: schummel/activation_aibas_kurs_ps_ms:latest
+        build: ./activationBase
+        volumes:
+            - ai_system:/tmp
+    codebase:
+        image: schummel/codebase_aibas_kurs_ps_ms:latest
+        build: ./codeBase
+        volumes:
+           - ai_system:/tmp
+volumes:
+  ai_system:
+    external: true
