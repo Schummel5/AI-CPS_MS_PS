@@ -6,6 +6,9 @@ This repository is part of the course: "M. Grum: Advanced AI-based Application S
 
 Status: InProgress
 
+The target is to predict if the esitmated Earnings per Share (EPS) matches with the actual EPS from the
+Earning History of the Apple Inc. (AAPL). This information helps the user to see if the estimated EPS can
+be trusted or not.
 
 # Protocol
 
