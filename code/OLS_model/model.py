@@ -20,10 +20,10 @@ test_df = pd.read_csv('/tmp/AIBAS_KURS_PS_MS/data/test_data.csv')
 print(train_df.head())
 
 # OLS Model influence 'Estimated EPS', target 'Actual EPS'
-x_train = train_df['Actual EPS'] # Independent variable
-y_train = train_df['Estimated EPS'] # Dependent variable
-x_test = test_df['Actual EPS']
-y_test = test_df['Estimated EPS']
+x_train = train_df['Estimated EPS'] # Independent variable
+y_train = train_df['Actual EPS'] # Dependent variable
+x_test = test_df['Estimated EPS']
+y_test = test_df['Actual EPS']
 
 # add constant to predictor variables
 X_train = sm.add_constant(x_train)
