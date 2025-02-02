@@ -28,7 +28,7 @@ from pybrain.tools.shortcuts import buildNetwork
 import pylab
 
 # Checks if the path is available
-output_dir = "/tmp/AIBAS_KURS_PS_MS/images/learningBase"
+output_dir = "/tmp/AIBAS_KURS_PS_MS/data/ANN/"
 os.makedirs(output_dir, exist_ok=True)
 
 # Reading the CSV files of the training and testing data
@@ -158,7 +158,7 @@ with open(os.path.join(output_dir, "training_report.txt"), 'w') as f:
     f.write(f"Final Test Error: {test_errors[-1]:.4f}\n")
 
 # Saving the error values of each epoch in a CSV file
-train_test_loss_path = "/tmp/AIBAS_KURS_PS_MS/images/training_validation_loss.csv"
+train_test_loss_path = "/tmp/AIBAS_KURS_PS_MS/data/ANN/training_validation_loss.csv"
 with open(train_test_loss_path, mode="w", newline="") as file:
     writer = csv.writer(file)
     writer.writerow(["Epoch", "Training Loss", "Test Loss"])
@@ -166,7 +166,7 @@ with open(train_test_loss_path, mode="w", newline="") as file:
         writer.writerow([i+1, train_errors[i], test_errors[i]])
 
 # Saving the data of each training iteration
-final_results_path = "/tmp/AIBAS_KURS_PS_MS/images/final_training_results.txt"
+final_results_path = "/tmp/AIBAS_KURS_PS_MS/data/ANN/final_training_results.txt"
 with open(final_results_path, "w") as file:
     file.write(f"Anzahl der Trainingsiterationen: {epochs}\n")
     file.write(f"Finaler Trainings-Loss: {train_errors[-1]:.4f}\n")
