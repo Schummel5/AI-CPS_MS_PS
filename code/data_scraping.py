@@ -1,3 +1,8 @@
+# This file is for Data Scraping and solves the data scraping part of 
+# the subgoal 2: Data Scraping and Preperation
+# We scraped the Data from this URL: https://www.alphaquery.com/stock/AAPL/earnings-history
+
+# Here are the necessary imports for the data scraping
 import csv
 import requests
 import os
@@ -5,22 +10,16 @@ from bs4 import BeautifulSoup
 import pandas as pd
 
 
-# This file is for Data Scraping and the Preparation
-# We scraped the Data from this URL: https://www.alphaquery.com/stock/AAPL/earnings-history
-# The target is to predict what the next EPS of the Apple stock is.
-
-## Step 1:  Data Scraping
+## Step 1:  Data Scraping by defining the URL
 URL = "https://www.alphaquery.com/stock/AAPL/earnings-history"
 page = requests.get(URL)
 directory = "data/"
 
-# Checks if directory exists
+# Checks if the directory data exists
 os.makedirs(directory, exist_ok=True)
 
-
-
+# This code checks if there is a table on the website (URL) and saves it in a CSV file
 soup = BeautifulSoup(page.text, "html.parser")
-
 table = soup.find("table")
 
 if table:
@@ -41,8 +40,6 @@ if table:
     print(f"The data was successfully stored in the file: {csv_file_path}.")
 else:
     print("Keine Tabelle gefunden.")
-
-#print(df)
 
 
 
