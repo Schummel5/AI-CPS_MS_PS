@@ -1,0 +1,9 @@
+FROM busybox
+
+RUN mkdir -p /tmp/activationBase
+
+
+COPY activation_data.csv /tmp/activationBase/
+COPY ReadMe.md /tmp/activationBase/
+
+CMD ["echo", "activationBase Image is ready!"]
