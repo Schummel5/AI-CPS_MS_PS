@@ -1,7 +1,15 @@
-# This file is for the data preparation. 
-# Subgoal 2: Data Scraping and Data Preparation
-# For example bringing the data in the right format, cleaning outliers and scaling.
+# This file is for Data Scraping and Preparation and solves
+# the subgoal 2: Data Scraping and Preparation
+# We scraped the Data from this URL: https://www.alphaquery.com/stock/AAPL/earnings-history
 
+# Here are the necessary imports for the data scraping
+import csv
+import requests
+import os
+from bs4 import BeautifulSoup
+import pandas as pd
+
+# Here are the necessary import for the data preperation
 import pylab
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -15,17 +23,49 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.linear_model import LinearRegression
 
+## Step 1:  Data Scraping by defining the URL
+URL = "https://www.alphaquery.com/stock/AAPL/earnings-history"
+page = requests.get(URL)
+directory = "/tmp/AIBAS_KURS_PS_MS/data/"
+
+# Checks if the directory data exists
+os.makedirs(directory, exist_ok=True)
+
+# This code checks if there is a table on the website (URL) and saves it in a CSV file
+soup = BeautifulSoup(page.text, "html.parser")
+table = soup.find("table")
+
+
+if table:
+    rows = table.find_all("tr")
+    data = []
+    for row in rows:
+        cells = row.find_all("td")
+        if cells:
+	        data.append([cell.text.strip() for cell in cells])
+
+    header = [th.text.strip() for th in table.find_all("th")]
+
+    df = pd.DataFrame(data, columns=header)
+
+    csv_file_path = "/tmp/AIBAS_KURS_PS_MS/data/scraped_data.csv"
+    df.to_csv(csv_file_path, index=False)
+
+    print(f"The data was successfully stored in the file: {csv_file_path}.")
+else:
+    print("Keine Tabelle gefunden.")
+
 
 ## Step 2: Data Cleaning
 path_cleaned = '/tmp/AIBAS_KURS_PS_MS/data/cleaned_data.csv'
-# change the data to numeric
-df.iloc[:, -2] = df.iloc[:, -2].replace({'\$': '', ',': ''}, regex=True).astype(float) 
-df.iloc[:, -1] = df.iloc[:, -1].replace({'\$': '', ',': ''}, regex=True).astype(float)  
+# Change the data to numeric
+df.iloc[:, -2] = df.iloc[:, -2].replace({r'\$': '', ',': ''}, regex=True).astype(float)
+df.iloc[:, -1] = df.iloc[:, -1].replace({r'\$': '', ',': ''}, regex=True).astype(float)
 df_cleaned = df.iloc[:, 2:]
 df = df.apply(pd.to_numeric, errors='coerce')
 df = df.dropna(axis=1, how='any')
 #print(df_cleaned.head())
-df_cleaned.to_csv(folder_cleaned, index=False)
+df_cleaned.to_csv(path_cleaned, index=False)
 
 # Quantile Filter
 lower_quantile = 0.10
@@ -78,10 +118,12 @@ test_data.to_csv(path_test, index=False)
 
 ## Step 4: Split the data in activation_data
 
-activation_data = df.iloc[:1]
+activation_data = test_data.iloc[:1]
 
 path_activation = '/tmp/AIBAS_KURS_PS_MS/data/activation_data.csv'
 
 activation_data.to_csv(path_activation, index=False)
+
+
 
 
