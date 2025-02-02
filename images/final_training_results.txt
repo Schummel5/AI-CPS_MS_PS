@@ -1,3 +1,0 @@
-Anzahl der Trainingsiterationen: 50
-Finaler Trainings-Loss: 0.0068
-Finaler Test-Loss: 0.0031
