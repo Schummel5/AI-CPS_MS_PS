@@ -32,7 +32,7 @@ os.makedirs(output_dir, exist_ok=True)
 
 # Reading the CSV files of the training and testing data
 train_df = pd.read_csv('/tmp/AIBAS_KURS_PS_MS/data/training_data.csv')
-test_df = pd.read_csv('/tmp/AIBAS_KURS_PS_MS/data/testing_data.csv')
+test_df = pd.read_csv('/tmp/AIBAS_KURS_PS_MS/data/test_data.csv')
 
 # Collecting the x and y of each dataset
 x_train, y_train = train_df.iloc[:, :-1].values, train_df.iloc[:, -1].values

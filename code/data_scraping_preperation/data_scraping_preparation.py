@@ -111,7 +111,7 @@ df.to_csv(path_normalized_filtered_cleaned_data, index=False)
 train_data, test_data = train_test_split(df, test_size=0.2, random_state=42)
 
 path_train = '/tmp/AIBAS_KURS_PS_MS/data/training_data.csv'
-path_test= '/tmp/AIBAS_KURS_PS_MS/data/testing_data.csv'
+path_test= '/tmp/AIBAS_KURS_PS_MS/data/test_data.csv'
 
 train_data.to_csv(path_train, index=False)
 test_data.to_csv(path_test, index=False)
