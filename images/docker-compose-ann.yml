@@ -1,0 +1,40 @@
+version: "3.0"
+services:
+    knowledgebase:
+        image: schummel/knowledgebase_aibas_kurs_ps_ms:latest
+        build: ./knowledgeBase
+        volumes:
+           - ai_system:/tmp
+        command:
+            - sh
+            - "-c"
+            - |
+              rm -rf /tmp/knowledgeBase/ && mkdir -p /tmp/knowledgeBase/ && cp -r /knowledgeBase/ /tmp/;
+
+    activationBase:
+        image: schummel/activation_aibas_kurs_ps_ms:latest
+        build: ./activationBase
+        volumes:
+            - ai_system:/tmp
+        depends_on:
+            - "knowledgeBase"
+            - "activationBase"
+        command:      
+            - sh      
+            - "-c"     
+            - |        
+              rm -rf /tmp/activationBase/ && mkdir -p /tmp/activationBase/ && cp -r /activationBase/ /tmp/;
+    codebase:
+        image: schummel/codebase_aibas_kurs_ps_ms:latest
+        build: ./codeBase
+        volumes:
+           - ai_system:/tmp
+        command:      
+            - sh      
+            - "-c"      
+            - |        
+              rm -rf /tmp/codeBase/ && mkdir -p /tmp/codeBase/ && cp -r /codeBase/ /tmp/;
+              python3 /tmp/codeBase/ann.py "/tmp/codeBase/" "/tmp/knowlegdeBase/currentAiSolution.xml" "/tmp/activatonBase/activation_data.csv";
+volumes:
+  ai_system:
+    external: true
