@@ -1,10 +1,10 @@
 # Image busybox
-FROM busybox:latest
+FROM busybox
 
 # Copies the AI/OLS model and the ReadMe file
-COPY currentAiSolution.xml /tmp/knowledgeBase/
-COPY currentOlsSolution.xml /tmp/knowledgeBase/
-COPY ReadMe.md /tmp/knowledgeBase/
+ADD currentAiSolution.xml /knowledgeBase/currentAiSolution.xml
+ADD currentOlsSolution.xml /knowledgeBase/currentOlsSolution.xml
+ADD ReadMe.md /tmp/knowledgeBase/
 
 # Output after creating the Image
 CMD ["echo", "knowledgeBase Image is ready!"]

@@ -47,9 +47,9 @@ plt.figure(figsize=(10, 6))
 plt.scatter(x_train, y_train, color='orange', label='Training Data')
 plt.scatter(x_test, y_test, color='blue', label='Testing Data', alpha=0.3)
 plt.scatter(y_test, model.predict(X_test), color='red', alpha=0.5)
-plt.xlabel("True Values")  # Updated label
-plt.ylabel("Predictions")  # Updated label
-plt.title("Scatter Plot OLS: True vs. Predicted")  # Updated title
+plt.xlabel("Estimated EPS")  # Updated label
+plt.ylabel("Actual/Predicted EPS")  # Updated label
+plt.title("Scatter Plot OLS: Actual EPS vs. Predicted EPS")  # Updated title
 plt.savefig(os.path.join(output_dir, "scatterplot_ols.png"))
 plt.show()
 
@@ -67,8 +67,12 @@ diagnostic = LinearRegDiagnostic(model)
 vif, fig, ax = diagnostic()
 fig.savefig(os.path.join(output_dir, "diagnosticplot_ols.png"))
 
-#view model summary
+# view model summary
 ols_model_file_path = '/tmp/AIBAS_KURS_PS_MS/data/OLS_model/currentOlsSolution.xml'
 with open(ols_model_file_path, 'w') as file:
 	file.write(model.summary().as_text())
+
+# Save the model
+with open("/tmp/AIBAS_KURS_PS_MS/images/knowledgeBase/currentOlsSolution.pkl", "wb") as file:
+    pickle.dump(model, file)
 
