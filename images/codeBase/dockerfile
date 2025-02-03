@@ -2,8 +2,10 @@ FROM busybox
 
 RUN mkdir -p /tmp/codeBase
 
-
+COPY model.py /tmp/codeBase/
+COPY ann.py /tmp/codeBase/
 COPY activation_data.csv /tmp/codeBase/
 COPY ReadMe.md /tmp/codeBase/
 
 CMD ["echo", "codeBase Image is ready!"]
+
