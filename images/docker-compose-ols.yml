@@ -1,39 +1,30 @@
-version: "3.0"
+version: "3.8"
 services:
-    knowledgebase:
+    knowledgeBase:
         image: schummel/knowledgebase_aibas_kurs_ps_ms:latest
-        build: ./knowledgeBase
         volumes:
-           - ai_system:/tmp
+        -   type: bind
+            source: ./ai_system
+            target: /tmp/ai_system
         command:
-            - sh
-            - "-c"
-            - |
-              rm -rf /tmp/knowledgeBase/ && mkdir -p /tmp/knowledgeBase/ && cp -r /knowledgeBase/ /tmp/;
+                cp -r /tmp/knowledgeBase /tmp/ai_system/
 
-    activationbase:
-        image: schummel/activation_aibas_kurs_ps_ms:latest
-        build: ./activationBase
+    activationBase:
+        image: schummel/activationbase_aibas_kurs_ps_ms:latest
         volumes:
-            - ai_system:/tmp
-        command:
-            - sh
-            - "-c"
-            - |
-              rm -rf /tmp/activationBase/ && mkdir -p /tmp/activationBase/ && cp -r /activationBase/ /tmp/;
-    codebase:
+        -   type: bind
+            source: ./ai_system
+            target: /tmp/ai_system
+        command:      
+                cp -r /tmp/activationBase /tmp/ai_system/
+    codeBase:
         image: schummel/codebase_aibas_kurs_ps_ms:latest
-        build: ./codeBase
         volumes:
-            - ai_system:/tmp
-        depends_on:
-            - "knowledgebase"
-            - "activationbase"
-        command:
-            - sh
-            - "-c"
-            - |
-              rm -rf /tmp/codeBase/ && mkdir -p /tmp/codeBase/ && cp -r /codeBase/ /tmp/;
-              python3 /tmp/codeBase/model.py "/tmp/codeBase/" "/tmp/knowlegdeBase/currentOlsSolution.xml" "/tmp/activatonBase/activation_data.csv";
+        -   type: bind
+            source: ./ai_system
+            target: /tmp/ai_system
+        command: 
+            cp -r /tmp/codeBase /tmp/ai_system/ ;
+                python3 /tmp/codeBase/model.py 
 volumes:
   ai_system:
