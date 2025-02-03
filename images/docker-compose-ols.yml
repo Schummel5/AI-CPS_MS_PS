@@ -11,14 +11,11 @@ services:
             - |
               rm -rf /tmp/knowledgeBase/ && mkdir -p /tmp/knowledgeBase/ && cp -r /knowledgeBase/ /tmp/;
 
-    activationBase:
+    activationbase:
         image: schummel/activation_aibas_kurs_ps_ms:latest
         build: ./activationBase
         volumes:
             - ai_system:/tmp
-        depends_on:
-            - "knowledgeBase"
-            - "activationBase"
         command:
             - sh
             - "-c"
@@ -28,7 +25,10 @@ services:
         image: schummel/codebase_aibas_kurs_ps_ms:latest
         build: ./codeBase
         volumes:
-           - ai_system:/tmp
+            - ai_system:/tmp
+        depends_on:
+            - "knowledgebase"
+            - "activationbase"
         command:
             - sh
             - "-c"
@@ -37,4 +37,3 @@ services:
               python3 /tmp/codeBase/model.py "/tmp/codeBase/" "/tmp/knowlegdeBase/currentOlsSolution.xml" "/tmp/activatonBase/activation_data.csv";
 volumes:
   ai_system:
-    external: true
