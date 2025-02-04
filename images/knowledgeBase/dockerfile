@@ -3,7 +3,7 @@ FROM busybox
 
 # Copies the AI/OLS model and the ReadMe file
 ADD currentAiSolution.xml /knowledgeBase/currentAiSolution.xml
-ADD currentOlsSolution.xml /knowledgeBase/currentOlsSolution.xml
+ADD currentOlsSolution.pkl /knowledgeBase/currentOlsSolution.pkl
 ADD ReadMe.md /tmp/knowledgeBase/
 
 # Output after creating the Image
