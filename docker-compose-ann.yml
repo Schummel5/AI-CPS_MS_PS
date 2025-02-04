@@ -23,8 +23,6 @@ services:
         -   type: bind
             source: ./ai_system
             target: /tmp/ai_system
-        command: 
-            cp -r /tmp/codeBase /tmp/ai_system/ ;
-                python3 /tmp/codeBase/ann.py 
+        command: bash -c "python3 /tmp/codeBase/activation_ai.py"
 volumes:
   ai_system:
