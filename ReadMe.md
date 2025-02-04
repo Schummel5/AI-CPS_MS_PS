@@ -1,7 +1,7 @@
-AI-CPS_MS_PS
+# AI-CPS_MS_PS
 
 
-📚 Project Description
+## 📚 Project Description
 
 This repository is part of the course: "M. Grum: Advanced AI-based Application Systems"
 
@@ -13,7 +13,7 @@ be trusted or not.
 
 
 
-👨‍💻 Installation
+## 👨‍💻 Installation
 
 Prerequisites
 
@@ -24,29 +24,33 @@ Git (optional, for cloning the repository)
 Docker & Docker Compose (optional, for containerized deployment)
 
 Clone the Repository
+```bash
+  git clone https://github.com/Schummel5/AI-CPS_MS_PS.git
+  cd AI-CPS_MS_PS
+```
 
-git clone https://github.com/Schummel5/AI-CPS_MS_PS.git
-cd AI-CPS_MS_PS
+
+
 
 Install Dependencies
-
+```bash
 pip install -r requirements.txt
+```
 
 
-
-🐳 Running with Docker Compose
+## 🐳 Running with Docker Compose
 
 To run the project using Docker Compose, use the following command:
-
+```bash
 docker compose -f docker-compose-ann.yml up
 docker compose -f docker-compose-ols.yml up
-
+```
 This will start all necessary services in a containerized environment.
 
 
 
-📜 Repository Structure
-
+## 📜 Repository Structure
+```
 AI-CPS_MS_PS/
 │-- code/               # Project source code
         |-- OLS_model/
@@ -62,15 +66,15 @@ AI-CPS_MS_PS/
 │-- docker-compose-ols.yml  # Docker Compose configuration
 │-- README.md           # Documentation
 
+```
 
-
-👥 Contributors
+## 👥 Contributors
 
 This repository is maintained and owned by [Philip Schummel & Max Stavenhagen].  
 
 
 
-💎 License
+## 💎 License
 
 This project is released under the **AGPL-3.0 License**. You can view the full text of the license
 [here](https://www.gnu.org/licenses/agpl-3.0.en.html).  
@@ -79,5 +83,4 @@ By utilizing this repository or its contents, you agree to comply with the terms
 including its requirements for distribution and modification of derived works.  
 
 If you have any questions or issues related to this project, feel free to contact the repository maintainers.  
-
 
