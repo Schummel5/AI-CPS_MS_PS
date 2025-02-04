@@ -46,7 +46,7 @@ print(f"X_test shape: {X_test.shape}, y_test shape: {y_test.shape}")'''
 plt.figure(figsize=(10, 6))
 plt.scatter(x_train, y_train, color='orange', label='Training Data')
 plt.scatter(x_test, y_test, color='blue', label='Testing Data', alpha=0.3)
-plt.scatter(y_test, model.predict(X_test), color='red', alpha=0.5)
+plt.scatter(x_test, model.predict(X_test), color='red', alpha=0.5)
 plt.xlabel("Estimated EPS")  # Updated label
 plt.ylabel("Actual/Predicted EPS")  # Updated label
 plt.title("Scatter Plot OLS: Actual EPS vs. Predicted EPS")  # Updated title

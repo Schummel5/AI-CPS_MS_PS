@@ -3,8 +3,8 @@
 Dep. Variable:             Actual EPS   R-squared:                       0.890
 Model:                            OLS   Adj. R-squared:                  0.884
 Method:                 Least Squares   F-statistic:                     138.0
-Date:                Mon, 03 Feb 2025   Prob (F-statistic):           1.40e-09
-Time:                        21:44:17   Log-Likelihood:                 14.777
+Date:                Tue, 04 Feb 2025   Prob (F-statistic):           1.40e-09
+Time:                        20:58:06   Log-Likelihood:                 14.777
 No. Observations:                  19   AIC:                            -25.55
 Df Residuals:                      17   BIC:                            -23.66
 Df Model:                           1                                         
