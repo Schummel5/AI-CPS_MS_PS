@@ -1,6 +1,11 @@
+# Image busybox
 FROM busybox
 
+WORKDIR /tmp/activationBase
+
+# Copies the activation_data.csv and the ReadMe file in the activationBase folder
 COPY activation_data.csv /tmp/activationBase/
 COPY ReadMe.md /tmp/activationBase/
 
+# Output after finishing the tasks
 CMD ["echo", "activationBase Image is ready!"]

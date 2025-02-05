@@ -1,13 +1,19 @@
+# Image ubuntu 
 FROM ubuntu:latest
 
+# Create the folder codeBase 
 RUN mkdir -p /tmp/codeBase
 WORKDIR /tmp/codeBase
+
+# Downloads for Pybrain
 RUN apt-get update  && apt-get install python3 -y && apt-get install python3-pandas -y && apt-get install git -y && git clone https://github.com/MarcusGrum/pybrain.git
 RUN apt-get install python3-statsmodels python3-numpy python3-pil python3-matplotlib python3-seaborn python3-sklearn -y
 
+# Copy the data into the codeBase folder
 COPY activation_ai.py /tmp/codeBase/
 COPY activation_ols.py /tmp/codeBase/
 COPY activation_data.csv /tmp/codeBase/
 COPY ReadMe.md /tmp/codeBase/
 
+# Output after the Image was created
 CMD ["echo", "codeBase Image is ready!"]
